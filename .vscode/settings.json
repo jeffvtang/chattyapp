@@ -1,2 +1,4 @@
 {
+  "eslint.enable": true,
+    "eslint.options": { "configFile": "/home/jeff/lighthouse/react-simple-boilerplate/.eslintrc"}
 }
