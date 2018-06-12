@@ -10,7 +10,7 @@ class MessageList extends Component {
   render() {
     return (
       <main className="messages">
-        <Message messages={this.props.messages}/>
+        {this.props.messages.map((message, i) => <Message message={message} key={i} />)}
         <MessageSystem />
       </main>
     );

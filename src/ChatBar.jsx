@@ -2,6 +2,13 @@ import React, { Component } from "react";
 
 class ChatBar extends Component {
   render() {
+    const onSubmit = evt => {
+      evt.preventDefault();
+      console.log(evt)
+      // Here, we call the function we were sent
+      // this.props.addTask(taskName.value);
+      // taskName.value = "";
+    };
     return (
       <footer className="chatbar">
         <input

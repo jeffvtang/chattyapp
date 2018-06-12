@@ -20,6 +20,7 @@ class App extends Component {
       ],
       loading: true
     };
+    this.handleKeyPress = this.handleKeyPress.bind(this)
   }
   componentDidMount() {
     console.log("componentDidMount <App />");
@@ -37,16 +38,20 @@ class App extends Component {
       this.setState({ messages: messages });
     }, 3000);
   }
-
+  handleKeyPress = (event) => {
+    if(event.key == 'Enter'){
+      console.log('enter press here! ')
+    }
+  }
   render() {
-    const { currentUser, messages } = this.state;
+    const { currentUser, messages} = this.state;
 
     return (
       <div>
         <NavBar />
         <h1>Hello React :)</h1>
         <MessageList messages={messages} />
-        <ChatBar currentUser={currentUser.name} />
+        <ChatBar currentUser={currentUser.name} handleKeyPress={this.handleKeyPress}/>
       </div>
     );
   }
