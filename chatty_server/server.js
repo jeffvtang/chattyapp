@@ -31,7 +31,10 @@ wss.on("connection", ws => {
     message.id = key
     console.log(message)
     console.log(`User ${message.username} said ${message.content}`);
-    ws.send(JSON.stringify(message))
+
+    wss.clients.forEach(client => {
+    client .send(JSON.stringify(message))
+    })
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
