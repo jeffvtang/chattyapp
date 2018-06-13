@@ -6,10 +6,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: { name: "Bob" , userColor: '' }, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: { name: "Bob" }, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
       loading: true,
-      users: {}
+      users: {},
+      userColor: ''
     };
     this.enterMessage = this.enterMessage.bind(this);
     this.enterName = this.enterName.bind(this);
@@ -26,7 +27,8 @@ class App extends Component {
         case "incomingMessage":
           console.log("dataFromSocket", dataFromSocket);
           const messages = this.state.messages.concat(dataFromSocket);
-          this.setState({ messages: messages });
+          this.setState({ messages: messages,
+          userColor: dataFromSocket.userColor });
           break;
         case "incomingNotification":
           // console.log(dataFromSocket);
@@ -73,10 +75,10 @@ class App extends Component {
   enterMessage = (name, content) => {
     console.log(name);
     const messagetoSocket = {
-      username: name.name,
+      username: name,
       content: content,
       type: "postMessage",
-      userColor: name.userColor,
+      userColor: this.state.userColor
     };
     this.socket.send(JSON.stringify(messagetoSocket));
   };
@@ -96,15 +98,15 @@ class App extends Component {
     this.setState({ currentUser: nametoState });
   };
   render() {
-    const { currentUser, messages, users } = this.state;
+    const { currentUser, messages, users, userColor } = this.state;
 
     return (
       <div>
         <NavBar userCount={users.userCount} />
         <h1>Hello React :)</h1>
-        <MessageList messages={messages} />
+        <MessageList messages={messages} userColor={userColor} />
         <ChatBar
-          currentUser={currentUser}
+          currentUser={currentUser.name}
           enterMessage={this.enterMessage}
           enterName={this.enterName}
         />
