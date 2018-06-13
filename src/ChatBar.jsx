@@ -21,7 +21,7 @@ class ChatBar extends Component {
           onKeyPress={this.enterCheck}
           className="chatbar-username"
           placeholder="Your Name (Optional)"
-          defaultValue={this.props.currentUser}
+          defaultValue={this.props.currentUser.name}
         />
         <input
           onKeyPress={this.enterCheck}

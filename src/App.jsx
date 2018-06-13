@@ -6,11 +6,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: { name: "Bob" }, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: { name: "Bob", userColor: "blue" }, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
       loading: true,
-      users: {},
-      userColor: ''
+      users: {}
     };
     this.enterMessage = this.enterMessage.bind(this);
     this.enterName = this.enterName.bind(this);
@@ -26,9 +25,23 @@ class App extends Component {
       switch (dataFromSocket.type) {
         case "incomingMessage":
           console.log("dataFromSocket", dataFromSocket);
-          const messages = this.state.messages.concat(dataFromSocket);
-          this.setState({ messages: messages,
-          userColor: dataFromSocket.userColor });
+          console.log('current state', this.state)
+          this.setState({
+            currentUser: {
+              name: this.state.currentUser.name,
+              userColor: dataFromSocket.userColor,
+            },
+          });
+          console.log('current state after', this.state)
+          const socketMessage = {
+            id: dataFromSocket.id,
+            username: dataFromSocket.username,
+            content: dataFromSocket.content,
+            type: dataFromSocket.type,
+          }
+          const messages = this.state.messages.concat(socketMessage);
+          console.log('message state', messages)
+           this.setState({messages: messages})
           break;
         case "incomingNotification":
           // console.log(dataFromSocket);
@@ -72,13 +85,13 @@ class App extends Component {
       this.setState({ messages: messages });
     }, 3000); */
   }
-  enterMessage = (name, content) => {
-    console.log(name);
+  enterMessage = (user, content) => {
+    console.log(user);
     const messagetoSocket = {
-      username: name,
+      username: user.name,
       content: content,
       type: "postMessage",
-      userColor: this.state.userColor
+      userColor: user.userColor
     };
     this.socket.send(JSON.stringify(messagetoSocket));
   };
@@ -88,25 +101,25 @@ class App extends Component {
     const nametoSocket = {
       oldName: this.state.currentUser.name,
       newName: name,
-      type: "postNotification",
+      type: "postNotification"
     };
     const nametoState = {
-      name: name,
+      name: name
     };
     // console.log("state", nametoSocket);
     this.socket.send(JSON.stringify(nametoSocket));
     this.setState({ currentUser: nametoState });
   };
   render() {
-    const { currentUser, messages, users, userColor } = this.state;
+    const { currentUser, messages, users } = this.state;
 
     return (
       <div>
         <NavBar userCount={users.userCount} />
-        <h1>Hello React :)</h1>
-        <MessageList messages={messages} userColor={userColor} />
+        {/* <h1>Hello React :)</h1> */}
+        <MessageList messages={messages} userColor={currentUser.userColor} />
         <ChatBar
-          currentUser={currentUser.name}
+          currentUser={currentUser}
           enterMessage={this.enterMessage}
           enterName={this.enterName}
         />

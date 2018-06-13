@@ -48,7 +48,7 @@ wss.on("connection", ws => {
     if (message.type == "postMessage") {
       // console.log('should be post', message)
       console.log(`User ${message.username} said ${message.content}`);
-      console.log(message);
+      // console.log(message);
       if (message.userColor == ''){
         // console.log('here')
         message.userColor = colors.sort(function(a,b) { return Math.random() > 0.5; } )[0]
