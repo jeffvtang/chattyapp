@@ -8,7 +8,8 @@ class App extends Component {
     this.state = {
       currentUser: { name: "Bob" }, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
-      loading: true
+      loading: true,
+      users: {}
     };
     this.enterMessage = this.enterMessage.bind(this);
     this.enterName = this.enterName.bind(this);
@@ -19,13 +20,44 @@ class App extends Component {
     this.socket.onopen = () => console.log("Connected to server");
 
     this.socket.addEventListener("message", event => {
-      let messageFromSocket = JSON.parse(event.data);
-      console.log(messageFromSocket);
-      const messages = this.state.messages.concat(messageFromSocket);
-      this.setState({ messages: messages });
+      let dataFromSocket = JSON.parse(event.data);
+
+      switch (dataFromSocket.type) {
+        case "incomingMessage":
+          // console.log("dataFromSocket", dataFromSocket);
+          const messages = this.state.messages.concat(dataFromSocket);
+          this.setState({ messages: messages });
+          break;
+        case "incomingNotification":
+          // console.log(dataFromSocket);
+          const notification = this.state.messages.concat(dataFromSocket);
+          this.setState({ messages: notification });
+          break;
+        case "userCountChanged":
+          console.log(dataFromSocket);
+          this.setState({ users: dataFromSocket });
+          // console.log("entire state", this.state);
+          // console.log("users", this.state.users);
+          break;
+      }
+
+      // if (dataFromSocket.type == "incomingMessage") {
+      //   console.log("dataFromSocket", dataFromSocket);
+      //   const messages = this.state.messages.concat(dataFromSocket);
+      //   this.setState({ messages: messages });
+      // } else if (dataFromSocket.type == "incomingNotification") {
+      //   console.log(dataFromSocket);
+      //   const messages = this.state.messages.concat(dataFromSocket);
+      //   this.setState({ messages: messages });
+      // } else if (dataFromSocket.type == "userCountChanged") {
+      //   console.log(dataFromSocket);
+      //   this.setState({ users: dataFromSocket})
+      //   console.log('entire state', this.state)
+      //   console.log('users', this.state.users)
+      // }
     });
 
- /*    setTimeout(() => {
+    /*    setTimeout(() => {
       console.log("Simulating incoming message");
       // Add a new message to the list of messages in the data store
       const newMessage = {
@@ -42,26 +74,32 @@ class App extends Component {
     // console.log(content);
     const messagetoSocket = {
       username: name,
-      content: content
+      content: content,
+      type: "postMessage"
     };
     this.socket.send(JSON.stringify(messagetoSocket));
   };
-  enterName = (name) => {
+  enterName = name => {
     // console.log(content);
-    console.log('received', name)
+    // console.log("received", name);
     const nametoSocket = {
-      name: name,
+      oldName: this.state.currentUser.name,
+      newName: name,
+      type: "postNotification"
     };
-    console.log('state', nametoSocket)
-    // this.socket.send(JSON.stringify(nametoSocket));
-    this.setState({ currentUser: nametoSocket });
+    const nametoState = {
+      name: name
+    };
+    // console.log("state", nametoSocket);
+    this.socket.send(JSON.stringify(nametoSocket));
+    this.setState({ currentUser: nametoState });
   };
   render() {
-    const { currentUser, messages } = this.state;
+    const { currentUser, messages, users } = this.state;
 
     return (
       <div>
-        <NavBar />
+        <NavBar userCount={users.userCount} />
         <h1>Hello React :)</h1>
         <MessageList messages={messages} />
         <ChatBar

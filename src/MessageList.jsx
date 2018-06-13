@@ -9,7 +9,7 @@ class MessageList extends Component {
         {this.props.messages.map((message) => (
           <Message message={message} key={message.id} />
         ))}
-        <MessageSystem />
+        {/* <MessageSystem /> */}
       </main>
     );
   }

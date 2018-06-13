@@ -24,13 +24,31 @@ const wss = new SocketServer({ server });
 wss.on("connection", ws => {
   console.log("Client connected");
   // ws.send('Connected to server')
+  console.log(wss.clients.size);
+  message = {
+    type: "userCountChanged",
+    userCount: wss.clients.size
+  };
+  wss.clients.forEach(client => {
+    client.send(JSON.stringify(message));
+  });
 
   ws.on("message", message => {
-    key = uuid(message);
     message = JSON.parse(message);
+    key = uuid(message);
     message.id = key;
-    // console.log(message)
-    console.log(`User ${message.username} said ${message.content}`);
+
+    if (message.type == "postMessage") {
+      // console.log('should be post', message)
+      console.log(`User ${message.username} said ${message.content}`);
+
+      message.type = "incomingMessage";
+      // console.log('should be incoming', message)
+    } else if (message.type == "postNotification") {
+      console.log("user name change", message);
+      console.log(message.oldName, "changed their name to", message.newName);
+      message.type = "incomingNotification";
+    }
 
     wss.clients.forEach(client => {
       client.send(JSON.stringify(message));
@@ -38,5 +56,14 @@ wss.on("connection", ws => {
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on("close", () => console.log("Client disconnected"));
+  ws.on("close", () => {
+    console.log("Client disconnected");
+    message = {
+      type: "userCountChanged",
+      userCount: wss.clients.size
+    };
+    wss.clients.forEach(client => {
+      client.send(JSON.stringify(message));
+    });
+  });
 });

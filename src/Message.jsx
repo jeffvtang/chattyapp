@@ -15,9 +15,23 @@ import React, { Component } from "react";
 
 const Message = ({ message, i }) => (
   <div className="message" key={message.id}>
-    <span className="message-username">{message.username}</span>
-    <span className="message-content">{message.content}</span>
+    {message.type == "incomingMessage" && (
+      <span>
+        <span className="message-username">{message.username}</span>
+        <span className="message-content">{message.content}</span>
+      </span>
+    )}
+    {message.type == "incomingNotification" && (
+      <div className="message system">
+        {message.oldName} changed their name to {message.newName}
+      </div>
+    )}
   </div>
 );
+{
+  /* <div className="message system">
+  {message.oldName} changed their name to {message.newName}
+</div>; */
+}
 
 export default Message;
