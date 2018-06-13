@@ -11,6 +11,7 @@ class App extends Component {
       loading: true
     };
     this.enterMessage = this.enterMessage.bind(this);
+    this.enterName = this.enterName.bind(this);
   }
   componentDidMount() {
     console.log("componentDidMount <App />");
@@ -44,7 +45,16 @@ class App extends Component {
       content: content
     };
     this.socket.send(JSON.stringify(messagetoSocket));
-
+  };
+  enterName = (name) => {
+    // console.log(content);
+    console.log('received', name)
+    const nametoSocket = {
+      name: name,
+    };
+    console.log('state', nametoSocket)
+    // this.socket.send(JSON.stringify(nametoSocket));
+    this.setState({ currentUser: nametoSocket });
   };
   render() {
     const { currentUser, messages } = this.state;
@@ -57,6 +67,7 @@ class App extends Component {
         <ChatBar
           currentUser={currentUser.name}
           enterMessage={this.enterMessage}
+          enterName={this.enterName}
         />
       </div>
     );
