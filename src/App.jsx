@@ -7,23 +7,16 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: { name: "Bob" }, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [
-        {
-          username: "Bob",
-          content: "Has anyone seen my marbles?"
-        },
-        {
-          username: "Anonymous",
-          content:
-            "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-        }
-      ],
+      messages: [],
       loading: true
     };
     this.enterMessage = this.enterMessage.bind(this);
   }
   componentDidMount() {
     console.log("componentDidMount <App />");
+    this.socket = new WebSocket('ws://localhost:3001')
+    this.socket.onopen = () => console.log('Connected to server')
+
     setTimeout(() => {
       console.log("Simulating incoming message");
       // Add a new message to the list of messages in the data store
@@ -39,11 +32,12 @@ class App extends Component {
   }
   enterMessage = (name, content) => {
     console.log(content);
-    const newMessage = {
+    const messagetoSocket = {
       username: name,
       content: content
     };
-    const messages = this.state.messages.concat(newMessage);
+    this.socket.send(JSON.stringify(messagetoSocket))
+    const messages = this.state.messages.concat(messagetoSocket);
     this.setState({ messages: messages });
   };
   render() {
