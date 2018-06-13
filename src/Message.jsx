@@ -16,10 +16,10 @@ import React, { Component } from "react";
 const Message = ({ message, userColor, i }) => (
   <div className="message" key={message.id}>
     {message.type == "incomingMessage" && (
-      <span>
+      <div>
         <span className="message-username" style={{color: userColor}}>{message.username}</span>
         <span className="message-content">{message.content}</span>
-      </span>
+      </div>
     )}
     {message.type == "incomingNotification" && (
       <div className="message system">
