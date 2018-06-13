@@ -22,7 +22,7 @@ const wss = new SocketServer({ server });
 var colors = [ 'red', 'green', 'blue', 'magenta', 'purple', 'plum', 'orange' ];
 // ... in random order
 // colors.sort(function(a,b) { return Math.random() > 0.5; } );
-colors.sort(function(a,b) { return Math.random() > 0.5; } )[0]
+// colors.sort(function(a,b) { return Math.random() > 0.5; } )[0]
 
 
 // Set up a callback that will run when a client connects to the server
@@ -48,7 +48,11 @@ wss.on("connection", ws => {
     if (message.type == "postMessage") {
       // console.log('should be post', message)
       console.log(`User ${message.username} said ${message.content}`);
-      
+      console.log(message);
+      if (message.userColor == ''){
+        // console.log('here')
+        message.userColor = colors.sort(function(a,b) { return Math.random() > 0.5; } )[0]
+      }
       message.type = "incomingMessage";
       // console.log('should be incoming', message)
     } else if (message.type == "postNotification") {
