@@ -6,7 +6,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: { name: "Bob" , color: 'blue' }, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: { name: "Bob" , userColor: 'blue' }, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
       loading: true,
       users: {}
@@ -24,7 +24,7 @@ class App extends Component {
 
       switch (dataFromSocket.type) {
         case "incomingMessage":
-          // console.log("dataFromSocket", dataFromSocket);
+          console.log("dataFromSocket", dataFromSocket);
           const messages = this.state.messages.concat(dataFromSocket);
           this.setState({ messages: messages });
           break;
@@ -76,7 +76,7 @@ class App extends Component {
       username: name.name,
       content: content,
       type: "postMessage",
-      color: name.color,
+      userColor: name.userColor,
     };
     this.socket.send(JSON.stringify(messagetoSocket));
   };

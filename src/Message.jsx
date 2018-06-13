@@ -17,7 +17,7 @@ const Message = ({ message, i }) => (
   <div className="message" key={message.id}>
     {message.type == "incomingMessage" && (
       <span>
-        <span className="message-username">{message.username}</span>
+        <span className="message-username" style={{color:message.userColor}}>{message.username}</span>
         <span className="message-content">{message.content}</span>
       </span>
     )}
