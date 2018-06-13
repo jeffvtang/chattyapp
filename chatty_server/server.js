@@ -18,6 +18,13 @@ const server = express()
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
+// Array with some colors
+var colors = [ 'red', 'green', 'blue', 'magenta', 'purple', 'plum', 'orange' ];
+// ... in random order
+// colors.sort(function(a,b) { return Math.random() > 0.5; } );
+colors.sort(function(a,b) { return Math.random() > 0.5; } )[0]
+
+
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
@@ -41,7 +48,7 @@ wss.on("connection", ws => {
     if (message.type == "postMessage") {
       // console.log('should be post', message)
       console.log(`User ${message.username} said ${message.content}`);
-
+      
       message.type = "incomingMessage";
       // console.log('should be incoming', message)
     } else if (message.type == "postNotification") {

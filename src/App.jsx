@@ -6,7 +6,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: { name: "Bob" }, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: { name: "Bob" , color: 'blue' }, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
       loading: true,
       users: {}
@@ -71,11 +71,12 @@ class App extends Component {
     }, 3000); */
   }
   enterMessage = (name, content) => {
-    // console.log(content);
+    console.log(name);
     const messagetoSocket = {
-      username: name,
+      username: name.name,
       content: content,
-      type: "postMessage"
+      type: "postMessage",
+      color: name.color,
     };
     this.socket.send(JSON.stringify(messagetoSocket));
   };
@@ -85,10 +86,10 @@ class App extends Component {
     const nametoSocket = {
       oldName: this.state.currentUser.name,
       newName: name,
-      type: "postNotification"
+      type: "postNotification",
     };
     const nametoState = {
-      name: name
+      name: name,
     };
     // console.log("state", nametoSocket);
     this.socket.send(JSON.stringify(nametoSocket));
@@ -103,7 +104,7 @@ class App extends Component {
         <h1>Hello React :)</h1>
         <MessageList messages={messages} />
         <ChatBar
-          currentUser={currentUser.name}
+          currentUser={currentUser}
           enterMessage={this.enterMessage}
           enterName={this.enterName}
         />
