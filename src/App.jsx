@@ -20,7 +20,7 @@ class App extends Component {
       ],
       loading: true
     };
-    this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.enterMessage = this.enterMessage.bind(this);
   }
   componentDidMount() {
     console.log("componentDidMount <App />");
@@ -28,7 +28,6 @@ class App extends Component {
       console.log("Simulating incoming message");
       // Add a new message to the list of messages in the data store
       const newMessage = {
-        id: 3,
         username: "Michelle",
         content: "Hello there!"
       };
@@ -38,20 +37,27 @@ class App extends Component {
       this.setState({ messages: messages });
     }, 3000);
   }
-  handleKeyPress = (event) => {
-    if(event.key == 'Enter'){
-      console.log('enter press here! ')
-    }
-  }
+  enterMessage = (name, content) => {
+    console.log(content);
+    const newMessage = {
+      username: name,
+      content: content
+    };
+    const messages = this.state.messages.concat(newMessage);
+    this.setState({ messages: messages });
+  };
   render() {
-    const { currentUser, messages} = this.state;
+    const { currentUser, messages } = this.state;
 
     return (
       <div>
         <NavBar />
         <h1>Hello React :)</h1>
         <MessageList messages={messages} />
-        <ChatBar currentUser={currentUser.name} handleKeyPress={this.handleKeyPress}/>
+        <ChatBar
+          currentUser={currentUser.name}
+          enterMessage={this.enterMessage}
+        />
       </div>
     );
   }

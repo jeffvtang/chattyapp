@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 
 class ChatBar extends Component {
+  enterCheck = evt => {
+    if(evt.key == 'Enter'){
+      // console.log('enter press here! ')
+      console.log(evt.sibling)
+      this.props.enterMessage(this.props.currentUser, evt.target.value)
+      evt.target.value = ''
+    }
+    // Here, we call the function we were sent
+  };
   render() {
-    const onSubmit = evt => {
-      evt.preventDefault();
-      console.log(evt)
-      // Here, we call the function we were sent
-      // this.props.addTask(taskName.value);
-      // taskName.value = "";
-    };
     return (
       <footer className="chatbar">
         <input
@@ -16,7 +18,7 @@ class ChatBar extends Component {
           placeholder="Your Name (Optional)"
           defaultValue={this.props.currentUser}
         />
-        <input
+        <input onKeyPress = {this.enterCheck}
           className="chatbar-message"
           placeholder="Type a message and hit ENTER"
         />
