@@ -8,8 +8,10 @@ class ChatBar extends Component {
       if (evt.target.className == "chatbar-username") {
         this.props.enterName(evt.target.value);
       } else {
-        this.props.enterMessage(this.props.currentUser, evt.target.value);
-        evt.target.value = "";
+        if (evt.target.value) {
+          this.props.enterMessage(this.props.currentUser, evt.target.value);
+          evt.target.value = "";
+        }
       }
     }
     // Here, we call the function we were sent
