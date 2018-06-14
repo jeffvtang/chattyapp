@@ -8,8 +8,8 @@ const Message = ({ message, i }) => (
     <span className="message-content">Dummy Text</span> */}
     {message.type == "incomingMessage" && (
       <div className="message" key={message.id}>
-        <span className="message-username" style={{ color: message.userColor }}>
-          {message.username}
+        <span className="message-username" style={{ color: 'black' }}>
+          {message.username ? message.username : 'Anonymous '}
         </span>
         {/* <span className="message-username">{message.username}</span> */}
         <span className="message-content">{message.content}</span>
@@ -17,7 +17,7 @@ const Message = ({ message, i }) => (
     )}
     {message.type == "incomingNotification" && (
       <div className="message system" key={message.id}>
-        {message.oldName} changed their name to {message.newName}
+        {message.oldName ? message.oldName : 'Anonymous'} changed their name to {message.newName ? message.newName : 'Anonymous'}
       </div>
     )}
   </div>
