@@ -25,9 +25,10 @@ class App extends Component {
             username: dataFromSocket.username,
             content: dataFromSocket.content,
             type: dataFromSocket.type,
-            userColor: dataFromSocket.userColor
+            messageColor: this.state.currentUser.userColor //placeholder
           };
           const messages = this.state.messages.concat(socketMessage);
+          console.log('current state', this.state)
           this.setState({ messages: messages });
           break;
         case "incomingNotification":
@@ -35,7 +36,13 @@ class App extends Component {
           this.setState({ messages: notification });
           break;
         case "userCountChanged":
-          this.setState({ users: dataFromSocket });
+        if (!this.state.currentUser.userColor) {
+          this.setState({ users: dataFromSocket.userCount,
+          currentUser: {userColor: dataFromSocket.userColor} });
+        } else {
+          this.setState({ users: dataFromSocket.userCount})
+        }
+          console.log('state w usercolor', this.state)
           break;
       }
     });
@@ -55,14 +62,15 @@ class App extends Component {
       type: "postNotification"
     };
     this.socket.send(JSON.stringify(nametoSocket));
-    this.setState({ currentUser: { name: name } });
+    this.setState({ currentUser: { name: name,
+    userColor: this.state.currentUser.userColor } });
   };
   render() {
     const { currentUser, messages, users } = this.state;
 
     return (
       <div>
-        <NavBar userCount={users.userCount} />
+        <NavBar userCount={users} />
         <MessageList messages={messages} />
         <ChatBar
           currentUser={currentUser}

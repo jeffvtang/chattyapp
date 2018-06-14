@@ -186,7 +186,8 @@ wss.on("connection", ws => {
   console.log("Client connected");
   message = {
     type: "userCountChanged",
-    userCount: wss.clients.size
+    userCount: wss.clients.size,
+    userColor: colors[Math.floor(Math.random() * colors.length)]
   };
   sendToAll(message);
 
@@ -198,7 +199,7 @@ wss.on("connection", ws => {
     if (message.type == "postMessage") {
       console.log(`User ${message.username} said ${message.content}`);
       // if (message.userColor == ''){
-      message.userColor = colors[Math.floor(Math.random() * colors.length)];
+      // message.userColor = colors[Math.floor(Math.random() * colors.length)];
       // }
       message.type = "incomingMessage";
     } else if (message.type == "postNotification") {

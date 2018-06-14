@@ -4,7 +4,7 @@ const Message = ({ message }) => (
   <div>
     {message.type == "incomingMessage" && (
       <div className="message">
-        <span className="message-username" style={{ color: message.userColor }}>
+        <span className="message-username" style={{ color: message.messageColor }}>
           {message.username ? message.username : "Anonymous"}
         </span>
         <span className="message-content">{message.content}</span>
