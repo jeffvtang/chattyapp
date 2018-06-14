@@ -24,8 +24,8 @@ class App extends Component {
 
       switch (dataFromSocket.type) {
         case "incomingMessage":
-          console.log("dataFromSocket", dataFromSocket);
-          console.log('current state', this.state)
+          // console.log("dataFromSocket", dataFromSocket);
+          // console.log('current state', this.state)
           this.setState({
             currentUser: {
               name: this.state.currentUser.name,
@@ -55,7 +55,6 @@ class App extends Component {
     });
   }
   enterMessage = (user, content) => {
-    console.log(user);
     const messagetoSocket = {
       username: user.name,
       content: content,

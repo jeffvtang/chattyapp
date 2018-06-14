@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 
-const Message = ({ message, userColor, i }) => (
+const Message = ({ message, i }) => (
   <div className="message" key={message.id}>
     {message.type == "incomingMessage" && (
       <div>

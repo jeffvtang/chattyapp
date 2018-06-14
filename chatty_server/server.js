@@ -48,6 +48,7 @@ wss.on("connection", ws => {
       console.log(`User ${message.username} said ${message.content}`);
       // if (message.userColor == ''){
       // }
+      message.type = "incomingMessage";
     } else if (message.type == "postNotification") {
       console.log("user name change", message);
       console.log(message.oldName, "changed their name to", message.newName);
