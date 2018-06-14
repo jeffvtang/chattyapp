@@ -15,6 +15,7 @@ class App extends Component {
     this.socket = new WebSocket("ws://localhost:3001");
     this.socket.onopen = () => console.log("Connected to server");
 
+
     this.socket.addEventListener("message", event => {
       let dataFromSocket = JSON.parse(event.data);
 
@@ -25,10 +26,9 @@ class App extends Component {
             username: dataFromSocket.username,
             content: dataFromSocket.content,
             type: dataFromSocket.type,
-            messageColor: this.state.currentUser.userColor //placeholder
+            messageColor: dataFromSocket.color //placeholder
           };
           const messages = this.state.messages.concat(socketMessage);
-          console.log('current state', this.state)
           this.setState({ messages: messages });
           break;
         case "incomingNotification":
@@ -42,7 +42,6 @@ class App extends Component {
         } else {
           this.setState({ users: dataFromSocket.userCount})
         }
-          console.log('state w usercolor', this.state)
           break;
       }
     });
@@ -51,7 +50,8 @@ class App extends Component {
     const messagetoSocket = {
       username: user.name,
       content: content,
-      type: "postMessage"
+      type: "postMessage",
+      color: this.state.currentUser.userColor
     };
     this.socket.send(JSON.stringify(messagetoSocket));
   };

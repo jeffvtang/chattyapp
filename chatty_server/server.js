@@ -87,7 +87,7 @@ var colors = [
   "HotPink",
   "IndianRed",
   "Indigo",
-  "Ivory",
+  // "Ivory",
   "Khaki",
   "Lavender",
   "LavenderBlush",
