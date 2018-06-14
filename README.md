@@ -1,45 +1,30 @@
-React Boilerplate
-=====================
+# Chatty App
 
-A minimal and light dev environment for ReactJS.
+Chatty App is a simple single-page app that allows users to communicate with each other without having to register accounts.
 
-### Usage
+It is built using ReactJS and communicates with a server via WebSockets to allow for real-time updates for all users.
 
-Clone the boilerplate and create your own git repo.
+## Final Product
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
+!["Screenshot of Main page with new Message"](https://github.com/jeffvtang/chattyapp/blob/master/docs/First%20Message.png)
+!["Screenshot of Name Change and Notification'](https://github.com/jeffvtang/chattyapp/blob/master/docs/Name%20Change.png)
+!["Screenshot of Additional user with unique colours'](https://github.com/jeffvtang/chattyapp/blob/master/docs/Unique%20Colors.png)
 
-Install the dependencies and start the server.
+## Getting Started
 
-```
-npm install
-npm start
-open http://localhost:3000
-```
+1. Fork this repository, then clone your fork of this repository.
+2. Install dependencies using the `npm install` command from the main directory.
+3. Install dependencies for the WebSockets server using the `npm install` command from the 'chatty_server' folder.
+4. Start each of the servers using the `node server.js` command in the respective folder. The app will be served at <http://localhost:3000/> and the server will run on <http://localhost:3001/>.
+5. Go to <http://localhost:3001/> in your browser.
 
-### Static Files
-
-You can store static files like images, fonts, etc in the `build` folder.
-
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
-
-### Linting
-
-This boilerplate project includes React ESLint configuration.
-
-```
-npm run lint
-```
-
-### Dependencies
-
+## Dependencies
+### Main Chatty App
 * React
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+
+### WebSockets server
+* Express
+* WebSockets
