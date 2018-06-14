@@ -4,16 +4,23 @@
 body {
   background: white;
   color: black;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   margin: 70px 0;
 }
 
+nav {
+  color: white;
+}
+
 h1 {
   float: right;
+  font-size: 24px;
 }
+
+
 .chatbar {
-  background: tomato;
+  background: #289aee;
   border-top: 1px solid black;
   bottom: 0;
   display: flex;
@@ -68,7 +75,7 @@ h1 {
 }
 
 .navbar {
-  background: tomato;
+  background: #289aee;
   border-bottom: 1px solid black;
   height: 60px;
   left: 0;
