@@ -27,7 +27,7 @@ sendToAll = message => {
 // Array with some colors
 var colors = [
   "AliceBlue",
-  "AntiqueWhite",
+  // "AntiqueWhite",
   "Aqua",
   "Aquamarine",
   "Azure",
@@ -72,11 +72,11 @@ var colors = [
   "DimGrey",
   "DodgerBlue",
   "FireBrick",
-  "FloralWhite",
+  // "FloralWhite",
   "ForestGreen",
   "Fuchsia",
   "Gainsboro",
-  "GhostWhite",
+  // "GhostWhite",
   "Gold",
   "GoldenRod",
   "Gray",
@@ -92,7 +92,7 @@ var colors = [
   "Lavender",
   "LavenderBlush",
   "LawnGreen",
-  "LemonChiffon",
+  // "LemonChiffon",
   "LightBlue",
   "LightCoral",
   "LightCyan",
@@ -110,7 +110,7 @@ var colors = [
   "LightYellow",
   "Lime",
   "LimeGreen",
-  "Linen",
+  // "Linen",
   "Magenta",
   "Maroon",
   "MediumAquaMarine",
@@ -174,10 +174,6 @@ var colors = [
   "Yellow",
   "YellowGreen"
 ];
-
-// colors[Math.floor(Math.random() * colors.length)];
-// ... in random order
-// colors.sort(function(a,b) { return Math.random() > 0.5; } )[0]
 
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by

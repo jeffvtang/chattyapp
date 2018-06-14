@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import NavBar from "./NavBar.jsx";
 import ChatBar from "./ChatBar.jsx";
 import MessageList from "./MessageList.jsx";
+
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +16,6 @@ class App extends Component {
   componentDidMount() {
     this.socket = new WebSocket("ws://localhost:3001");
     this.socket.onopen = () => console.log("Connected to server");
-
 
     this.socket.addEventListener("message", event => {
       let dataFromSocket = JSON.parse(event.data);
@@ -46,6 +47,9 @@ class App extends Component {
       }
     });
   }
+  componentDidUpdate() {
+    this.messagesEnd.scrollIntoView(); // scrolls to the bottom when re-rendering (new message arrives)
+  }
   enterMessage = (user, content) => {
     const messagetoSocket = {
       username: user.name,
@@ -72,6 +76,11 @@ class App extends Component {
       <div>
         <NavBar userCount={users} />
         <MessageList messages={messages} />
+        <div
+          ref={newestMessage => {
+            this.messagesEnd = newestMessage;
+          }}
+        />
         <ChatBar
           currentUser={currentUser}
           enterMessage={this.enterMessage}
