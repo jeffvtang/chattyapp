@@ -19,6 +19,7 @@ const server = express()
 const wss = new SocketServer({ server });
 
 sendToAll = message => {
+  message.id = uuid(message)
   wss.clients.forEach(client => {
     client.send(JSON.stringify(message));
   });
@@ -30,7 +31,7 @@ var colors = [
   // "AntiqueWhite",
   "Aqua",
   "Aquamarine",
-  "Azure",
+  // "Azure",
   "Beige",
   "Bisque",
   "Black",
@@ -138,7 +139,7 @@ var colors = [
   "PaleGreen",
   "PaleTurquoise",
   "PaleVioletRed",
-  "PapayaWhip",
+  // "PapayaWhip",
   "PeachPuff",
   "Peru",
   "Pink",
@@ -189,14 +190,8 @@ wss.on("connection", ws => {
 
   ws.on("message", message => {
     message = JSON.parse(message);
-    key = uuid(message);
-    message.id = key;
-
     if (message.type == "postMessage") {
       console.log(`User ${message.username} said ${message.content}`);
-      // if (message.userColor == ''){
-      // message.userColor = colors[Math.floor(Math.random() * colors.length)];
-      // }
       message.type = "incomingMessage";
     } else if (message.type == "postNotification") {
       console.log(message.oldName, "changed their name to", message.newName);
