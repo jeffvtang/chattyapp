@@ -18,26 +18,27 @@ const server = express()
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
+sendToAll = message => {
+  wss.clients.forEach(client => {
+    client.send(JSON.stringify(message));
+  });
+}
+
 // Array with some colors
-var colors = [ 'red', 'green', 'blue', 'magenta', 'purple', 'plum', 'orange' ];
+var colors = ['blue', 'blueviolet', 'darkgreen', 'darkred', 'firebrick', 'pink', 'red', 'plum', 'purple', 'orange', 'green', 'magenta'];
 // ... in random order
 // colors.sort(function(a,b) { return Math.random() > 0.5; } )[0]
-
 
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 wss.on("connection", ws => {
   console.log("Client connected");
-  // ws.send('Connected to server')
-  console.log(wss.clients.size);
   message = {
     type: "userCountChanged",
     userCount: wss.clients.size
   };
-  wss.clients.forEach(client => {
-    client.send(JSON.stringify(message));
-  });
+  sendToAll(message)
 
   ws.on("message", message => {
     message = JSON.parse(message);
@@ -50,14 +51,11 @@ wss.on("connection", ws => {
       // }
       message.type = "incomingMessage";
     } else if (message.type == "postNotification") {
-      console.log("user name change", message);
       console.log(message.oldName, "changed their name to", message.newName);
       message.type = "incomingNotification";
     }
 
-    wss.clients.forEach(client => {
-      client.send(JSON.stringify(message));
-    });
+    sendToAll(message)
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
@@ -67,8 +65,6 @@ wss.on("connection", ws => {
       type: "userCountChanged",
       userCount: wss.clients.size
     };
-    wss.clients.forEach(client => {
-      client.send(JSON.stringify(message));
-    });
+    sendToAll(message)
   });
 });

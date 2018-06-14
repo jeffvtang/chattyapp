@@ -6,16 +6,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: { name: "Bob" }, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {},
       messages: [],
-      loading: true,
-      users: {}
+      users: 0
     };
-    this.enterMessage = this.enterMessage.bind(this);
-    this.enterName = this.enterName.bind(this);
   }
   componentDidMount() {
-    console.log("componentDidMount <App />");
     this.socket = new WebSocket("ws://localhost:3001");
     this.socket.onopen = () => console.log("Connected to server");
 
@@ -24,41 +20,31 @@ class App extends Component {
 
       switch (dataFromSocket.type) {
         case "incomingMessage":
-          // console.log("dataFromSocket", dataFromSocket);
-          // console.log('current state', this.state)
-          this.setState({
-            currentUser: {
-              name: this.state.currentUser.name,
-            },
-          });
-          console.log('current state after', this.state)
           const socketMessage = {
             id: dataFromSocket.id,
             username: dataFromSocket.username,
             content: dataFromSocket.content,
             type: dataFromSocket.type,
-          }
+            userColor: "black"
+          };
           const messages = this.state.messages.concat(socketMessage);
-          console.log('message state', messages)
-           this.setState({messages: messages})
+          this.setState({ messages: messages });
           break;
         case "incomingNotification":
           const notification = this.state.messages.concat(dataFromSocket);
           this.setState({ messages: notification });
           break;
         case "userCountChanged":
-          console.log(dataFromSocket);
           this.setState({ users: dataFromSocket });
           break;
-      }
-
+      };
     });
   }
   enterMessage = (user, content) => {
     const messagetoSocket = {
       username: user.name,
       content: content,
-      type: "postMessage",
+      type: "postMessage"
     };
     this.socket.send(JSON.stringify(messagetoSocket));
   };
@@ -68,11 +54,8 @@ class App extends Component {
       newName: name,
       type: "postNotification"
     };
-    const nametoState = {
-      name: name,
-    };
     this.socket.send(JSON.stringify(nametoSocket));
-    this.setState({ currentUser: nametoState });
+    this.setState({ currentUser: {name: name} });
   };
   render() {
     const { currentUser, messages, users } = this.state;

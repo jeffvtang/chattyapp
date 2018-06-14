@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 
-
-const Message = ({ message, i }) => (
-  <div className="message" key={message.id}>
+const Message = ({ message }) => (
+  <div>
     {message.type == "incomingMessage" && (
-      <div>
-        {/* <span className="message-username" style={{color: userColor}}>{message.username}</span> */}
-        <span className="message-username">{message.username}</span>
+      <div className="message">
+        <span className="message-username" style={{ color: "black" }}>
+          {message.username ? message.username : "Anonymous"}
+        </span>
         <span className="message-content">{message.content}</span>
       </div>
     )}
     {message.type == "incomingNotification" && (
       <div className="message system">
-        {message.oldName} changed their name to {message.newName}
+        {message.oldName ? message.oldName : "Anonymous"} changed their name to {message.newName ? message.newName : "Anonymous"}
       </div>
     )}
   </div>
