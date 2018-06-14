@@ -5,7 +5,8 @@ const Message = ({ message, userColor, i }) => (
   <div className="message" key={message.id}>
     {message.type == "incomingMessage" && (
       <div>
-        <span className="message-username" style={{color: userColor}}>{message.username}</span>
+        {/* <span className="message-username" style={{color: userColor}}>{message.username}</span> */}
+        <span className="message-username">{message.username}</span>
         <span className="message-content">{message.content}</span>
       </div>
     )}
@@ -16,6 +17,5 @@ const Message = ({ message, userColor, i }) => (
     )}
   </div>
 );
-{
 
 export default Message;

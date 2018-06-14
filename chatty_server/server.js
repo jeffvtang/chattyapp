@@ -21,7 +21,6 @@ const wss = new SocketServer({ server });
 // Array with some colors
 var colors = [ 'red', 'green', 'blue', 'magenta', 'purple', 'plum', 'orange' ];
 // ... in random order
-// colors.sort(function(a,b) { return Math.random() > 0.5; } );
 // colors.sort(function(a,b) { return Math.random() > 0.5; } )[0]
 
 
@@ -46,15 +45,9 @@ wss.on("connection", ws => {
     message.id = key;
 
     if (message.type == "postMessage") {
-      // console.log('should be post', message)
       console.log(`User ${message.username} said ${message.content}`);
-      // console.log(message);
-      if (message.userColor == ''){
-        // console.log('here')
-        message.userColor = colors.sort(function(a,b) { return Math.random() > 0.5; } )[0]
-      }
-      message.type = "incomingMessage";
-      // console.log('should be incoming', message)
+      // if (message.userColor == ''){
+      // }
     } else if (message.type == "postNotification") {
       console.log("user name change", message);
       console.log(message.oldName, "changed their name to", message.newName);

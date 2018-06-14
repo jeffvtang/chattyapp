@@ -6,7 +6,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: { name: "Bob", userColor: "" }, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: { name: "Bob" }, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
       loading: true,
       users: {}
@@ -29,7 +29,6 @@ class App extends Component {
           this.setState({
             currentUser: {
               name: this.state.currentUser.name,
-              userColor: dataFromSocket.userColor,
             },
           });
           console.log('current state after', this.state)
@@ -61,7 +60,6 @@ class App extends Component {
       username: user.name,
       content: content,
       type: "postMessage",
-      userColor: user.userColor
     };
     this.socket.send(JSON.stringify(messagetoSocket));
   };
@@ -73,7 +71,6 @@ class App extends Component {
     };
     const nametoState = {
       name: name,
-      userColor: this.state.currentUser.userColor
     };
     this.socket.send(JSON.stringify(nametoSocket));
     this.setState({ currentUser: nametoState });
@@ -84,7 +81,7 @@ class App extends Component {
     return (
       <div>
         <NavBar userCount={users.userCount} />
-        <MessageList messages={messages} userColor={currentUser.userColor} />
+        <MessageList messages={messages} />
         <ChatBar
           currentUser={currentUser}
           enterMessage={this.enterMessage}
