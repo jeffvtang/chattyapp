@@ -20,11 +20,11 @@ It is built using ReactJS and communicates with a server via WebSockets to allow
 
 ## Dependencies
 ### Main Chatty App
-* React
+* ReactJS
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
 
 ### WebSockets server
-* Express
+* ExpressJS
 * WebSockets
