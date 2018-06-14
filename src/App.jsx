@@ -26,18 +26,15 @@ class App extends Component {
         case "incomingMessage":
           // console.log("dataFromSocket", dataFromSocket);
           // console.log('current state', this.state)
-          this.setState({
-            currentUser: {
-              name: this.state.currentUser.name,
-            },
-          });
-          console.log('current state after', this.state)
+          // console.log('datafromsocket', dataFromSocket)
           const socketMessage = {
             id: dataFromSocket.id,
             username: dataFromSocket.username,
             content: dataFromSocket.content,
             type: dataFromSocket.type,
+            userColor: 'blue'
           }
+          // console.log('socketmessage', socketMessage)
           const messages = this.state.messages.concat(socketMessage);
           console.log('message state', messages)
            this.setState({messages: messages})
