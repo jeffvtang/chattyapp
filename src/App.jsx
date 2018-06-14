@@ -25,7 +25,7 @@ class App extends Component {
             username: dataFromSocket.username,
             content: dataFromSocket.content,
             type: dataFromSocket.type,
-            userColor: "black"
+            userColor: dataFromSocket.userColor
           };
           const messages = this.state.messages.concat(socketMessage);
           this.setState({ messages: messages });
@@ -37,7 +37,7 @@ class App extends Component {
         case "userCountChanged":
           this.setState({ users: dataFromSocket });
           break;
-      };
+      }
     });
   }
   enterMessage = (user, content) => {
@@ -55,7 +55,7 @@ class App extends Component {
       type: "postNotification"
     };
     this.socket.send(JSON.stringify(nametoSocket));
-    this.setState({ currentUser: {name: name} });
+    this.setState({ currentUser: { name: name } });
   };
   render() {
     const { currentUser, messages, users } = this.state;
