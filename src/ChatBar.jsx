@@ -4,7 +4,7 @@ class ChatBar extends Component {
   enterCheck = evt => {
     if (evt.key == "Enter") {
       if (evt.target.className == "chatbar-username") {
-        this.props.enterName(evt.target.value);
+        this.props.changeName(evt.target.value);
       } else {
         if (evt.target.value) {
           this.props.enterMessage(this.props.currentUser, evt.target.value);

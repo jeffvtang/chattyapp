@@ -59,7 +59,7 @@ class App extends Component {
     };
     this.socket.send(JSON.stringify(messagetoSocket));
   };
-  enterName = name => {
+  changeName = name => {
     const nametoSocket = {
       oldName: this.state.currentUser.name,
       newName: name,
@@ -84,7 +84,7 @@ class App extends Component {
         <ChatBar
           currentUser={currentUser}
           enterMessage={this.enterMessage}
-          enterName={this.enterName}
+          changeName={this.changeName}
         />
       </div>
     );
