@@ -16,7 +16,7 @@ It is built using ReactJS and communicates with a server via WebSockets to allow
 2. Install dependencies using the `npm install` command from the main directory.
 3. Install dependencies for the WebSockets server using the `npm install` command from the 'chatty_server' folder.
 4. Start each of the servers using the `node server.js` command in the respective folder. The app will be served at <http://localhost:3000/> and the server will run on <http://localhost:3001/>.
-5. Go to <http://localhost:3001/> in your browser.
+5. Go to <http://localhost:3000/> in your browser.
 
 ## Dependencies
 ### Main Chatty App
